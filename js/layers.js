@@ -31,6 +31,21 @@ addLayer("U", {
             description: "+1 Point Piece Per Second",
             cost: new Decimal(1),
         },
+        12: {
+            unlocked() { return hasAchievement("A", 11)},
+            title: "The Second",
+            description: "x2 Point Pieces",
+            cost: new Decimal(2),
+        },
+        21: {
+            unlocked() { return hasAchievement("A", 11)},
+            title: "Layer 2",
+            description: "Get Point Pieces Based Off Of Upgrade Points",
+            cost: new Decimal(2),
+            effect() {
+                return player[this.layer, this.id]
+            }
+        },
     },
 })
 addLayer("A", {
@@ -44,18 +59,8 @@ addLayer("A", {
     achievements: {
         11: {
             name: "2 Upgrade Points!",
-            tooltip: "hi",
-            done() { return hasUpgrade("U", 11) }
-        },
-        12: {
-            name: "3 Upgrade Points!",
-            tooltip: "hi",
-            done() { return player.points.gte(15) }
-        },
-        13: {
-            name: "4 Upgrade Points!",
-            tooltip: "hi",
-            done() { return player["U"].points.gte(2) }
-        },
+            tooltip: "Get 2 Upgrade Points",
+            done() { return player["U"].points.gte(2) && hasUpgrade("U", 11)}
+        }
     }
 })
