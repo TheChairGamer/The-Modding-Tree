@@ -31,53 +31,31 @@ addLayer("U", {
             description: "+1 Point Piece Per Second",
             cost: new Decimal(1),
         },
-        12: {
-            title: "Multiplication",
-            description: "x2 Point Piece Gain",
-            cost: new Decimal(2),
-        },
-        21: {
-            title: "New Layer!",
-            description: "+2 Point Pieces Per Second",
-            cost: new Decimal(3),
-        },
-        22: {
-            title: "End?",
-            description: "+3 Point Pieces Per Second",
-            cost: new Decimal(5),
-        },
-    }
+    },
 })
 addLayer("A", {
-    name: "Upgrade Points", // This is optional, only used in a few places, If absent it just uses the layer id.
-    symbol: "U", // This appears on the layer's node. Default is the id with the first letter capitalized
+    name: "Achievements", // This is optional, only used in a few places, If absent it just uses the layer id.
+    symbol: "A", // This appears on the layer's node. Default is the id with the first letter capitalized
     position: 0, // Horizontal position within a row. By default it uses the layer id and sorts in alphabetical order
-    startData() { return {
-        unlocked: true,
-		points: new Decimal(0),
-    }},
+    resource: "Achievements",
     color: "#4BDC13",
-    requires: new Decimal(10), // Can be a function that takes requirement increases into account
-    resource: "Upgrade Points", // Name of prestige currency
-    baseResource: "point pieces", // Name of resource prestige is based on
-    baseAmount() {return player.points}, // Get the current amount of baseResource
-    type: "normal", // normal: cost to gain currency depends on amount gained. static: cost depends on how much you already have
-    exponent: 0.5, // Prestige currency exponent
-    gainMult() { // Calculate the multiplier for main currency from bonuses
-        let mult = new Decimal(1)
-        return mult
-    },
-    gainExp() { // Calculate the exponent on main currency from bonuses
-        return new Decimal(1)
-    },
     row: "side", // Row the layer is in on the tree (0 is the first row)
-    hotkeys: [
-        {key: "U", description: "U: Reset for Upgrade points", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
-    ],
     layerShown(){return true},
     achievements: {
         11: {
-            name: "^2"
+            name: "2 Upgrade Points!",
+            tooltip: "hi",
+            done() { return hasUpgrade("U", 11) }
+        },
+        12: {
+            name: "3 Upgrade Points!",
+            tooltip: "hi",
+            done() { return player.points.gte(15) }
+        },
+        13: {
+            name: "4 Upgrade Points!",
+            tooltip: "hi",
+            done() { return player.points.gte(2) }
         },
     }
 })
