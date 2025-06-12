@@ -55,7 +55,7 @@ addLayer("A", {
         13: {
             name: "4 Upgrade Points!",
             tooltip: "hi",
-            done() { return player.points.gte(2) }
+            done() { return player["U"].points.gte(2) }
         },
     }
 })
